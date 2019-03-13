@@ -1,0 +1,24 @@
+{
+  "name": "sleep-routines",
+  "version": "1.0.0",
+  "description": "A simple Web app that starts timers based on QR code URLs and gathers data",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack-dev-server",
+    "start": "npm run build && node ./src/server/index.js"
+  },
+  "author": "Lei Nelissen",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^4.29.6",
+    "ws": "^6.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-loader": "^8.0.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  }
+}

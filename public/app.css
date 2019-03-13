@@ -1,0 +1,16 @@
+#progress-bar { 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(10, 10, 10, 0.5);
+    transform: translateY(-100%);
+    transition: transform 1s ease;
+}
+
+body { 
+    background: salmon;
+    padding: 0;
+    margin: 0;
+}
