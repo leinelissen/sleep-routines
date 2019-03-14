@@ -1,5 +1,15 @@
-class Timer {
+import { EventTarget } from "event-target-shim"
+import {
+    EVENT_TIMER_STARTED,
+    EVENT_TIMER_COMPLETED,
+} from '../../constants';
+
+const timerStartedEvent = new CustomEvent(EVENT_TIMER_STARTED);
+const timerCompletedEvent = new CustomEvent(EVENT_TIMER_COMPLETED);
+
+class Timer extends EventTarget {
     constructor(element) {
+        super();
         this.element = element;
         this.timer = null;
         this.iteration = 0;
@@ -16,6 +26,7 @@ class Timer {
         // Clear the current interval and start a new one
         clearInterval(this.timer);
         this.timer = setInterval(this.handleTick, 1000);
+        this.dispatchEvent(timerStartedEvent);
     }
 
     handleTick() {
@@ -25,6 +36,7 @@ class Timer {
         
         if (this.iteration === this.interval) {
             clearInterval(this.timer);
+            this.dispatchEvent(timerCompletedEvent)
         }
     }
 

@@ -11,6 +11,7 @@
   "author": "Lei Nelissen",
   "license": "MIT",
   "dependencies": {
+    "event-target-shim": "^5.0.1",
     "webpack": "^4.29.6",
     "ws": "^6.2.0"
   },
