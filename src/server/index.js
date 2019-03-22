@@ -1,8 +1,7 @@
 require('dotenv').config()
 const WebSocket = require('ws');
+const handler = require('serve-handler');
 const http = require('http');
-const serveStatic = require('serve-static');
-var finalhandler = require('finalhandler');
 const nano = require('nano')(process.env.COUCHDB_URL);
 const db = nano.db.use(process.env.COUCHDB_DB);
 
@@ -25,14 +24,16 @@ wss.on('error', console.error);
 // Notify CLI that the server has started
 wss.on('listening', () => console.log('Websockets server has started...'));
 
-// Create static server
-const serve = serveStatic('./public');
-
-// Define node HTTP server
-var server = http.createServer(function onRequest (req, res) {
-    serve(req, res, finalhandler(req, res));
+// Create HTTP Server
+const server = http.createServer((request, response) => {
+    return handler(request, response, {
+        public: './public',
+        rewrites: [
+            { source: "app/**", destination: "/index.html" },        
+        ]
+    });
 });
 
-// Make HTTP server listen on supplied port
-server.listen(process.env.HTTP_PORT);
-console.log('HTTP server has started...');
+server.listen(process.env.HTTP_PORT, () => {
+    console.log('HTTP Server is running...');
+});

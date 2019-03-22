@@ -10,12 +10,12 @@ import {
 } from '../constants';
 
 // Do a check on the length of the hash string in the URL bar
-if (window.location.hash.length <= 1) {
+if (window.location.pathname.length <= 1) {
     throw new Error('No data was received');
 }
 
 // Pull data from URL
-const URLData = atob(window.location.hash.substr(1));
+const URLData = atob(window.location.pathname.substr(5));
 const [
     userId,
     stickerId,
