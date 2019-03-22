@@ -19,8 +19,12 @@ const URLData = atob(window.location.hash.substr(1));
 const [
     userId,
     stickerId,
-    interval
+    interval,
+    color
 ] = URLData.split(',');
+
+// Set background color
+document.body.style.backgroundColor = color;
 
 // Start connection to Websocket Server
 const socket = new SocketConnection(`ws://${location.hostname}:3001`);
@@ -59,7 +63,7 @@ tracker.addEventListener(EVENT_DEVICE_STOPPED_MOVING, handleTrackingEvent);
 
 
 // Initialise and start timer
-const timer = new Timer(document.getElementById('progress-bar'));
+const timer = new Timer(document.getElementById('progress-bar'), color);
 timer.addEventListener(EVENT_TIMER_STARTED, handleTrackingEvent);
 timer.addEventListener(EVENT_TIMER_COMPLETED, handleTrackingEvent);
 timer.start(parseInt(interval));
