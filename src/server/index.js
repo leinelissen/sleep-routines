@@ -9,13 +9,20 @@ const db = nano.db.use(process.env.COUCHDB_DB);
 const wss = new WebSocket.Server({ port: 3001 });
 
 // Listen for connections
-wss.on('connection', function connection(ws) {
+wss.on('connection', function connection(ws, req) {
     ws.on('message', function incoming(message) {
+        // Log incoming message
         console.log(`[${new Date().toISOString()}] Received: ${message}`);
+
+        // Acknowledge received message
         ws.send('ACK');
-        db.insert(JSON.parse(message));
+
+        // Prepare data to be inserted into the DB
+        const data = JSON.parse(message);
+        data.ip = req.connection.remoteAddress;
+        data.timestamp = new Date().getTime();
+        db.insert(data);
     });
-    console.log(ws._socket.remoteAddress);
 });
 
 // Log any errors
